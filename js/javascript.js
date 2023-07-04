@@ -1,13 +1,27 @@
 // Create a 16x16 grid of square divs
 const container = document.querySelector(".container");
-for (let i = 0; i < 256; i++) {
-    const divSquare = document.createElement("div");
-    container.appendChild(divSquare);
+
+let n = 16;
+function createGrid(n) {
+    const grid = document.querySelectorAll(".container>div");
+    grid.forEach(item => {
+        container.removeChild(item);
+    })
+    for (let i = 0; i < n*n; i++) {
+        const divSquare = document.createElement("div");
+        container.appendChild(divSquare);
+    }
 }
 
-let mousePressed = false;
+function gridSize() {
+   n = prompt("Enter grid size");
+   createGrid(n);
+   sketch();
+}
 
-const grid = document.querySelectorAll(".container>div");
+function sketch() {
+    let mousePressed = false;
+    const grid = document.querySelectorAll(".container>div");
 grid.forEach(item => {
     item.addEventListener("mousedown", function () {
         mousePressed = true;
@@ -27,6 +41,14 @@ grid.forEach(item => {
     item.addEventListener("mouseup", function() {
         mousePressed = false;
     })
-})
+});
 
 console.log(grid);
+
+}
+
+const btn = document.querySelector(".grid-size");
+btn.addEventListener("click", gridSize)
+
+createGrid(n);
+sketch();

@@ -5,12 +5,36 @@
 }
 
 body {
-    margin: 0;
+    margin: 0 auto;
 }
 
-.container {
-    max-width: 800px;
+.ui.flex-container {
+    max-width: 1200px;
+    justify-content: space-between;
     margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+}
+
+.controls {
+    flex-direction: column;
+
+    align-items: center;
+    border: 1px solid magenta;
+    width: 300px;
+}
+
+.controls .grid-size {
+    align-items: center;
+    font-size: 1.125rem;
+    padding: 5px 50px;
+}
+
+.container.flex-container {
+    width: 700px;
 }
 
 .flex-container {
@@ -21,6 +45,6 @@ body {
 .container.flex-container > * {
     /* background-color: black; */
     border: 1px solid black;
-    width: calc(6%);
-    padding-top: calc(6%);
+    width: calc(5.9%);
+    padding-top: calc(5.9%);
 }
