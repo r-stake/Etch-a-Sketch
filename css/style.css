@@ -43,8 +43,7 @@ h1 {
 }
 
 .container.flex-container > * {
-    /* background-color: black; */
     border: 1px solid black;
-    width: calc(5.9%);
-    padding-top: calc(5.9%);
+    width: calc(6.25% - 2px);
+    padding-top: calc(6.25% - 2px);
 }

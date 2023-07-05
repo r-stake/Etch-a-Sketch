@@ -10,13 +10,21 @@ function createGrid(n) {
     for (let i = 0; i < n*n; i++) {
         const divSquare = document.createElement("div");
         container.appendChild(divSquare);
+        const squareSize = 100 / n;
+        divSquare.style.width = `calc(${squareSize}% - 2px)`;
+        divSquare.style.paddingTop = `calc(${squareSize}% - 2px)`;
     }
 }
 
 function gridSize() {
-   n = prompt("Enter grid size");
-   createGrid(n);
-   sketch();
+    let userInput = 0;
+    while (!userInput || userInput > 100) {
+        userInput = +prompt("Enter grid size");
+    }
+    n = userInput;
+    userInput = 0
+    createGrid(n);
+    sketch();
 }
 
 function sketch() {
