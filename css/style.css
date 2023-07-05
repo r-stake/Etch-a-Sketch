@@ -8,6 +8,11 @@ body {
     margin: 0 auto;
 }
 
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .ui.flex-container {
     max-width: 1200px;
     justify-content: space-between;
@@ -37,9 +42,8 @@ h1 {
     width: 700px;
 }
 
-.flex-container {
-    display: flex;
-    flex-wrap: wrap;
+.container.flex-container > div {
+    user-select: none;
 }
 
 .container.flex-container > * {

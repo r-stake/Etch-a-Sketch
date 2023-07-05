@@ -2,6 +2,8 @@
 const container = document.querySelector(".container");
 
 let n = 16;
+let mousePressed = false;
+
 function createGrid(n) {
     const grid = document.querySelectorAll(".container>div");
     grid.forEach(item => {
@@ -28,35 +30,40 @@ function gridSize() {
 }
 
 function sketch() {
-    let mousePressed = false;
     const grid = document.querySelectorAll(".container>div");
-grid.forEach(item => {
-    item.addEventListener("mousedown", function () {
-        mousePressed = true;
-        item.style.backgroundColor = "black";
-    })
-});
 
-grid.forEach(item => {
-    item.addEventListener("mouseover", function() {
-        if (mousePressed) {
+    grid.forEach(item => {
+        item.addEventListener("mousedown", function () {
+            mousePressed = true;
             item.style.backgroundColor = "black";
-        }
-    })
-});
-
-grid.forEach(item => {
-    item.addEventListener("mouseup", function() {
-        mousePressed = false;
-    })
-});
-
-console.log(grid);
-
+        })
+    });
+    
+    grid.forEach(item => {
+        item.addEventListener("mouseover", function() {
+            if (mousePressed) {
+                item.style.backgroundColor = "black";
+            }
+        })
+    });
+    
+    grid.forEach(item => {
+        item.addEventListener("mouseup", function() {
+            mousePressed = false;
+        })
+    });
 }
 
 const btn = document.querySelector(".grid-size");
 btn.addEventListener("click", gridSize)
 
 createGrid(n);
-sketch();
+
+container.addEventListener("mouseover", () => {
+    sketchTrue = true;
+    sketch();
+});
+
+container.addEventListener("mouseleave", () => {
+    mousePressed = false;
+})
