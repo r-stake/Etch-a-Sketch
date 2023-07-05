@@ -40,7 +40,7 @@ function sketch() {
     });
     
     grid.forEach(item => {
-        item.addEventListener("mouseover", function() {
+        item.addEventListener("mouseenter", function() {
             if (mousePressed) {
                 item.style.backgroundColor = "black";
             }
@@ -59,7 +59,7 @@ btn.addEventListener("click", gridSize)
 
 createGrid(n);
 
-container.addEventListener("mouseover", () => {
+container.addEventListener("mouseenter", () => {
     sketchTrue = true;
     sketch();
 });
