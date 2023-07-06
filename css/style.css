@@ -26,16 +26,16 @@ h1 {
 
 .controls {
     flex-direction: column;
-
     align-items: center;
     border: 1px solid magenta;
     width: 300px;
 }
 
-.controls .grid-size {
+.controls button {
     align-items: center;
     font-size: 1.125rem;
     padding: 5px 50px;
+    width: 250px;
 }
 
 .container.flex-container {

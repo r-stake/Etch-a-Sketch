@@ -1,8 +1,8 @@
-// Create a 16x16 grid of square divs
-const container = document.querySelector(".container");
-
 let n = 16;
 let mousePressed = false;
+const container = document.querySelector(".container");
+const btnResizeGrid = document.querySelector(".grid-size");
+const btnClearGrid = document.querySelector(".clear-grid");
 
 function createGrid(n) {
     const grid = document.querySelectorAll(".container>div");
@@ -26,7 +26,13 @@ function gridSize() {
     n = userInput;
     userInput = 0
     createGrid(n);
-    sketch();
+}
+
+function clearGrid() {
+    const grid = document.querySelectorAll(".container>div")
+    grid.forEach(item => {
+        item.style.backgroundColor = "white";
+    })
 }
 
 function sketch() {
@@ -36,7 +42,7 @@ function sketch() {
         item.addEventListener("mousedown", function () {
             mousePressed = true;
             item.style.backgroundColor = "black";
-        })
+        });
     });
     
     grid.forEach(item => {
@@ -44,20 +50,18 @@ function sketch() {
             if (mousePressed) {
                 item.style.backgroundColor = "black";
             }
-        })
+        });
     });
     
     grid.forEach(item => {
         item.addEventListener("mouseup", function() {
             mousePressed = false;
-        })
+        });
     });
 }
 
-const btn = document.querySelector(".grid-size");
-btn.addEventListener("click", gridSize)
-
-createGrid(n);
+btnResizeGrid.addEventListener("click", gridSize);
+btnClearGrid.addEventListener("click", clearGrid);
 
 container.addEventListener("mouseenter", () => {
     sketchTrue = true;
@@ -66,4 +70,6 @@ container.addEventListener("mouseenter", () => {
 
 container.addEventListener("mouseleave", () => {
     mousePressed = false;
-})
+});
+
+createGrid(n);
