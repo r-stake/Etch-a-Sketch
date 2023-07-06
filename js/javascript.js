@@ -59,10 +59,25 @@ function setColor(rgbRedValue, rgbGreenValue, rgbBlueValue) {
     rgbBlue = rgbBlueValue;
 }
 
-// function updateColorUI() {
-//     const currentlySelectedColor = document.querySelector(`.${selector}`);
-//     currentlySelectedColor = selector.classList.add("highlighted-color");
-// }
+function updateColorUI(selection) {
+    if (selection.classList.contains("highlighted-color")) {
+        selection.classList.remove("highlighted-color");
+        defaultColor();
+    } else {
+        colorSelections.forEach(selection => {
+            selection.classList.remove("highlighted-color");
+        });
+        selection.classList.add("highlighted-color");
+        const currentlySelectedColor = document.querySelector(".currently-selected-color");
+        currentlySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+    }
+}
+
+function defaultColor() {
+    rgbRed = 0;
+    rgbGreen = 0;
+    rgbBlue = 0;
+}
 
 function clearGrid() {
     const grid = document.querySelectorAll(".container>div")
@@ -113,15 +128,16 @@ colorSelections.forEach(selection => {
     selection.addEventListener("click", function() {
         const colorValues = getColor(this);
         setColor(colorValues.red, colorValues.green, colorValues.blue);
+        updateColorUI(selection);
     });
 });
+
 btnClearGrid.addEventListener("click", clearGrid);
 btnRandomizeColor.addEventListener("click", () => {
     if (isRandomColor === true) {
         isRandomColor = false;
-        rgbRed = 0;
-        rgbGreen = 0;
-        rgbBlue = 0;
+        defaultColor();
+        // updateColorUI();
         btnRandomizeColor.classList.remove("selected");
     } else {
         isRandomColor = true;
