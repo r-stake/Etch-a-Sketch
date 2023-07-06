@@ -1,8 +1,14 @@
 let n = 16;
 let mousePressed = false;
+let rgbRed = 0;
+let rgbGreen = 0;
+let rgbBlue = 0;
+let isRandomColor = false;
+
 const container = document.querySelector(".container");
 const btnResizeGrid = document.querySelector(".grid-size");
 const btnClearGrid = document.querySelector(".clear-grid");
+const btnRandomizeColor = document.querySelector(".randomize-color");
 
 function createGrid(n) {
     const grid = document.querySelectorAll(".container>div");
@@ -18,7 +24,7 @@ function createGrid(n) {
     }
 }
 
-function gridSize() {
+function resizeGrid() {
     let userInput = 0;
     while (!userInput || userInput > 100) {
         userInput = +prompt("Enter grid size");
@@ -41,14 +47,24 @@ function sketch() {
     grid.forEach(item => {
         item.addEventListener("mousedown", function () {
             mousePressed = true;
-            item.style.backgroundColor = "black";
+            if (isRandomColor) {
+                rgbRed = Math.floor(Math.random() * 256);
+                rgbGreen = Math.floor(Math.random() * 256);
+                rgbBlue = Math.floor(Math.random() * 256);
+            }
+            item.style.backgroundColor = `rgb(${rgbRed}${rgbGreen}${rgbBlue})`;
         });
     });
     
     grid.forEach(item => {
         item.addEventListener("mouseenter", function() {
             if (mousePressed) {
-                item.style.backgroundColor = "black";
+                if (isRandomColor) {
+                    rgbRed = Math.floor(Math.random() * 256);
+                    rgbGreen = Math.floor(Math.random() * 256);
+                    rgbBlue = Math.floor(Math.random() * 256);
+                }
+                item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
             }
         });
     });
@@ -60,8 +76,15 @@ function sketch() {
     });
 }
 
-btnResizeGrid.addEventListener("click", gridSize);
+btnResizeGrid.addEventListener("click", resizeGrid);
 btnClearGrid.addEventListener("click", clearGrid);
+btnRandomizeColor.addEventListener("click", () => {
+    if (isRandomColor) {
+        isRandomColor = false;
+    } else {
+        isRandomColor = true;
+    }
+})
 
 container.addEventListener("mouseenter", () => {
     sketchTrue = true;
