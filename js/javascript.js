@@ -41,28 +41,30 @@ function clearGrid() {
     })
 }
 
+function randomizeColor() {
+    rgbRed = Math.floor(Math.random() * 256);
+    rgbGreen = Math.floor(Math.random() * 256);
+    rgbBlue = Math.floor(Math.random() * 256);
+}
+
 function sketch() {
     const grid = document.querySelectorAll(".container>div");
 
     grid.forEach(item => {
         item.addEventListener("mousedown", function () {
             mousePressed = true;
-            if (isRandomColor) {
-                rgbRed = Math.floor(Math.random() * 256);
-                rgbGreen = Math.floor(Math.random() * 256);
-                rgbBlue = Math.floor(Math.random() * 256);
+            if (isRandomColor === true) {
+                randomizeColor();
             }
-            item.style.backgroundColor = `rgb(${rgbRed}${rgbGreen}${rgbBlue})`;
+            item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
         });
     });
     
     grid.forEach(item => {
         item.addEventListener("mouseenter", function() {
-            if (mousePressed) {
-                if (isRandomColor) {
-                    rgbRed = Math.floor(Math.random() * 256);
-                    rgbGreen = Math.floor(Math.random() * 256);
-                    rgbBlue = Math.floor(Math.random() * 256);
+            if (mousePressed === true) {
+                if (isRandomColor === true) {
+                    randomizeColor();
                 }
                 item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
             }
@@ -81,6 +83,9 @@ btnClearGrid.addEventListener("click", clearGrid);
 btnRandomizeColor.addEventListener("click", () => {
     if (isRandomColor) {
         isRandomColor = false;
+        rgbRed = 0;
+        rgbGreen = 0;
+        rgbBlue = 0;
     } else {
         isRandomColor = true;
     }
