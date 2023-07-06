@@ -6,6 +6,7 @@
 
 body {
     margin: 0 auto;
+    background-color: #000080;
 }
 
 .flex-container {
@@ -22,6 +23,7 @@ body {
 h1 {
     text-align: center;
     font-size: 4rem;
+    color: #D4AF37;
 }
 
 .controls {
@@ -29,13 +31,76 @@ h1 {
     align-items: center;
     border: 1px solid magenta;
     width: 300px;
+    gap: 10px;
 }
 
 .controls button {
+    color: #D4AF37;
     align-items: center;
     font-size: 1.125rem;
     padding: 5px 50px;
     width: 250px;
+    background-color: #000080;
+    cursor: pointer;
+    border: 1px solid #D4AF37;
+}
+
+.controls .color-selection {
+    color: #D4AF37;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 250px;
+    padding: 20px;
+    background-color: #1D2951;
+    gap: 2px;
+}
+
+.controls .color-selection div {
+    width: calc(12.5% - 2px);
+    padding-top: calc(12.5% - 2px);
+}
+
+.color-selection .red {
+    background-color: red;
+}
+
+.color-selection .orange {
+    background-color: orange;
+}
+
+.color-selection .yellow {
+    background-color: yellow;
+}
+
+.color-selection .green {
+    background-color: green;
+}
+
+.color-selection .aqua {
+    background-color: aqua;
+}
+
+.color-selection .blue {
+    background-color: blue;
+}
+
+.color-selection .dark-blue {
+    background-color: darkblue;
+}
+
+.color-selection .purple {
+    background-color: purple;
+}
+
+.controls button.selected {
+    background-color: #D4AF37;
+    color: #000080;
+    font-weight: 900;
+}
+
+.highlighted-color {
+    transform: scale(1.1);
+    border: 1px solid black;
 }
 
 .container.flex-container {
@@ -47,7 +112,14 @@ h1 {
 }
 
 .container.flex-container > * {
-    border: 1px solid black;
+    background-color: #FFFAFA;
+    border: 1px solid rgba(0, 0, 0, 0.4);
     width: calc(6.25% - 2px);
     padding-top: calc(6.25% - 2px);
+}
+
+.controls .currently-selected-color {
+    width: calc(100%);
+    padding-top: calc(80%);
+    background-color: black;
 }
