@@ -3,9 +3,6 @@ let mousePressed = false;
 let rgbRed = 0;
 let rgbGreen = 0;
 let rgbBlue = 0;
-let rgbRedRandom = 0;
-let rgbGreenRandom = 0;
-let rgbBlueRandom = 0;
 let rgbRedToggled = 0;
 let rgbGreenToggled = 0;
 let rgbBlueToggled = 0;
@@ -64,47 +61,25 @@ function setColor() {
         rgbGreen = 0;
         rgbBlue = 0;
     }
-    
 }
 
 function updateColorUI(selection) {
     if (isRandomColor === true) {
         displaySelectedColor.style.background = `linear-gradient(to right, red, orange, yellow, green, aqua, blue, darkblue, purple)`;
-    } else if (isRandomColor === false) {
+    } else {
         displaySelectedColor.style.background = ``;
         displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
     }
-    if (isColorToggled === true) {
+    if (selection) {
         if (selection.classList.contains("highlighted-color")) {
             selection.classList.remove("highlighted-color");
             isColorToggled = false;
-            displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
-            selectedColor();
+            displaySelectedColor.style.backgroundColor = `rgb(0, 0, 0)`;
         } else {
             colorSelections.forEach(selection => {
                 selection.classList.remove("highlighted-color");
             });
             selection.classList.add("highlighted-color");
-            displaySelectedColor.style.backgroundColor = `rgb(${rgbRedToggled}, ${rgbGreenToggled}, ${rgbBlueToggled})`;
-        }
-
-    } else if (isColorToggled === false) {
-        displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
-    }
-}
-
-function selectedColor() {
-    for (let i = 0; i < colorSelections.length; i++) {
-        if (colorSelections[i].classList.contains("highlighted-color")) {
-            rgbRed = rgbRedToggled;
-            rgbGreen = rgbGreenToggled;
-            rgbBlue = rgbBlueToggled;
-            displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
-            break;
-        } else {
-            rgbRed = 0;
-            rgbGreen = 0;
-            rgbBlue = 0;
             displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
         }
     }
@@ -139,7 +114,6 @@ function sketch() {
             if (mousePressed === true) {
                 setColor();
                 item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
-
             }
         });
     });
@@ -159,8 +133,8 @@ colorSelections.forEach(selection => {
             isColorToggled = true;
         }
         getColor(this);
-        updateColorUI(selection);
         setColor();
+        updateColorUI(selection);
     });
 });
 
@@ -170,7 +144,6 @@ btnRandomizeColor.addEventListener("click", () => {
     if (isRandomColor === true) {
         isRandomColor = false;
         setColor();
-        selectedColor();
         updateColorUI();
         btnRandomizeColor.classList.remove("selected");
     } else {
