@@ -131,46 +131,42 @@ function randomizeColor() {
     rgbGreen = Math.floor(Math.random() * 256);
     rgbBlue = Math.floor(Math.random() * 256);
 }
-test
+
+function handleMousedown() {
+    mousePressed = true;
+    setColor();
+    if (isDarkenToggled === true) {
+        getColor(this);
+        this.style.backgroundColor = `rgb(${rgbRedSquare}, ${rgbGreenSquare}, ${rgbBlueSquare})`;
+    } else {
+        this.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+    }
+}
+
+function handleMouseenter() {
+    if (mousePressed === true) {
+        setColor();
+        if (isDarkenToggled === true) {
+            getColor(this);
+            this.style.backgroundColor = `rgb(${rgbRedSquare}, ${rgbGreenSquare}, ${rgbBlueSquare})`;
+        } else {
+            this.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+        }
+    }
+}
+
+function handleMouseup() {
+    mousePressed = false;
+}
 
 
 function sketch() {
     const grid = document.querySelectorAll(".container>div");
 
     grid.forEach(item => {
-        item.addEventListener("mousedown", function () {
-            mousePressed = true;
-            setColor();
-            if (isDarkenToggled === true) {
-                getColor(this);
-                item.style.backgroundColor = `rgb(${rgbRedSquare}, ${rgbGreenSquare}, ${rgbBlueSquare})`;
-            }
-            else {
-                item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
-            }
-        });
-    });
-    
-    grid.forEach(item => {
-        item.addEventListener("mouseenter", function() {
-            event.stopPropagation();
-            if (mousePressed === true) {
-                setColor();
-                if (isDarkenToggled === true) {
-                    getColor(this);
-                    item.style.backgroundColor = `rgb(${rgbRedSquare}, ${rgbGreenSquare}, ${rgbBlueSquare})`;
-                }
-                else {
-                    item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
-                }
-            }
-        });
-    });
-    
-    grid.forEach(item => {
-        item.addEventListener("mouseup", function() {
-            mousePressed = false;
-        });
+        item.addEventListener("mousedown", handleMousedown);
+        item.addEventListener("mouseenter", handleMouseenter);
+        item.addEventListener("mouseup", handleMouseup);
     });
 }
 
@@ -178,11 +174,13 @@ btnResizeGrid.addEventListener("click", resizeGrid);
 
 colorSelections.forEach(selection => {
     selection.addEventListener("click", function() {
-        if (isRandomColor === true || isEraserToggled === true) {
+        if (isRandomColor === true || isEraserToggled === true || isDarkenToggled === true) {
             isRandomColor = false;
             isEraserToggled = false;
+            isDarkenToggled = false;
             btnRandomizeColor.classList.remove("selected");
             btnEraser.classList.remove("selected");
+            btnDarkeningEffect.classList.remove("selected");
         }
         if (isColorToggled === false) {
             isColorToggled = true;
@@ -207,14 +205,14 @@ btnRandomizeColor.addEventListener("click", () => {
         updateColorUI();
         btnRandomizeColor.classList.remove("selected");
     } else {
-        if (isEraserToggled === true) {
-            isEraserToggled = false;
-            btnEraser.classList.remove("selected");
-        }
+        isEraserToggled = false;
+        isDarkenToggled = false;
+        btnEraser.classList.remove("selected");
+        btnDarkeningEffect.classList.remove("selected");
         isRandomColor = true;
+        btnRandomizeColor.classList.add("selected");
         setColor();
         updateColorUI();
-        btnRandomizeColor.classList.add("selected");
     }
 });
 
@@ -225,14 +223,14 @@ btnEraser.addEventListener("click", () => {
         updateColorUI();
         btnEraser.classList.remove("selected");
     } else {
-        if (isRandomColor === true) {
-            isRandomColor = false;
-        }
-        isEraserToggled = true;
+        isRandomColor = false;
+        isDarkenToggled = false;
         btnRandomizeColor.classList.remove("selected");
+        btnDarkeningEffect.classList.remove("selected");
+        isEraserToggled = true;
+        btnEraser.classList.add("selected");
         setColor();
         updateColorUI();
-        btnEraser.classList.add("selected");
     }
 });
 
@@ -241,10 +239,17 @@ btnDarkeningEffect.addEventListener("click", () => {
         isDarkenToggled = false;
         btnDarkeningEffect.classList.remove("selected");
     } else {
+        isRandomColor = false;
+        isEraserToggled = false;
+        btnRandomizeColor.classList.remove("selected");
+        btnEraser.classList.remove("selected");
         isDarkenToggled = true;
         btnDarkeningEffect.classList.add("selected");
+        setColor();
+        updateColorUI();
     }
 })
+
 
 container.addEventListener("mouseenter", () => {
     sketch();
