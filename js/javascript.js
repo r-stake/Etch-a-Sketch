@@ -6,9 +6,13 @@ let rgbBlue = 0;
 let rgbRedToggled = 0;
 let rgbGreenToggled = 0;
 let rgbBlueToggled = 0;
+let rgbRedSquare = 0;
+let rgbGreenSquare = 0;
+let rgbBlueSquare = 0;
 let isRandomColor = false;
 let isColorToggled = false;
 let isEraserToggled = false;
+let isDarkenToggled = false;
 
 const container = document.querySelector(".container");
 const btnResizeGrid = document.querySelector(".grid-size");
@@ -17,6 +21,7 @@ const btnRandomizeColor = document.querySelector(".randomize-color");
 const colorSelections = document.querySelectorAll(".color-selection>div");
 const displaySelectedColor = document.querySelector(".currently-selected-color");
 const btnEraser = document.querySelector(".eraser");
+const btnDarkeningEffect = document.querySelector(".darkening");
 
 function createGrid(n) {
     const grid = document.querySelectorAll(".container>div");
@@ -43,12 +48,31 @@ function resizeGrid() {
 }
 
 function getColor(element) {
-    const computedStyle = window.getComputedStyle(element);
-    const color = computedStyle.backgroundColor;
-    const rgbValues = color.match(/\d+/g);
-    rgbRedToggled = parseInt(rgbValues[0]);
-    rgbGreenToggled = parseInt(rgbValues[1]);
-    rgbBlueToggled = parseInt(rgbValues[2]);
+    if (isDarkenToggled === true ) {
+        const computedStyle = window.getComputedStyle(element);
+        const squareColor = computedStyle.backgroundColor;
+        const squareRgbValues = squareColor.match(/\d+/g);
+        rgbRedSquare = parseInt(squareRgbValues[0]) - 25;
+        rgbGreenSquare = parseInt(squareRgbValues[1]) - 25;
+        rgbBlueSquare = parseInt(squareRgbValues[2]) - 25;
+        if (rgbRedSquare < 0) {
+            rgbRedSquare = 0;
+        }
+        if (rgbGreenSquare < 0) {
+            rgbGreenSquare = 0;
+        }
+        if (rgbBlueSquare < 0) {
+            rgbBlueSquare = 0;
+        }
+    } else {
+        const computedStyle = window.getComputedStyle(element);
+        const color = computedStyle.backgroundColor;
+        const rgbValues = color.match(/\d+/g);
+        rgbRedToggled = parseInt(rgbValues[0]);
+        rgbGreenToggled = parseInt(rgbValues[1]);
+        rgbBlueToggled = parseInt(rgbValues[2]);
+    }
+    
 }
 
 function setColor() {
@@ -115,15 +139,28 @@ function sketch() {
         item.addEventListener("mousedown", function () {
             mousePressed = true;
             setColor();
-            item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+            if (isDarkenToggled === true) {
+                getColor(this);
+                item.style.backgroundColor = `rgb(${rgbRedSquare}, ${rgbGreenSquare}, ${rgbBlueSquare})`;
+            }
+            else {
+                item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+            }
         });
     });
     
     grid.forEach(item => {
         item.addEventListener("mouseenter", function() {
+            event.stopPropagation();
             if (mousePressed === true) {
                 setColor();
-                item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+                if (isDarkenToggled === true) {
+                    getColor(this);
+                    item.style.backgroundColor = `rgb(${rgbRedSquare}, ${rgbGreenSquare}, ${rgbBlueSquare})`;
+                }
+                else {
+                    item.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+                }
             }
         });
     });
@@ -197,8 +234,17 @@ btnEraser.addEventListener("click", () => {
     }
 });
 
+btnDarkeningEffect.addEventListener("click", () => {
+    if (isDarkenToggled === true) {
+        isDarkenToggled = false;
+        btnDarkeningEffect.classList.remove("selected");
+    } else {
+        isDarkenToggled = true;
+        btnDarkeningEffect.classList.add("selected");
+    }
+})
+
 container.addEventListener("mouseenter", () => {
-    sketchTrue = true;
     sketch();
 });
 
