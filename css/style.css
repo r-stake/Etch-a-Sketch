@@ -119,7 +119,8 @@ h1 {
 }
 
 .controls .currently-selected-color {
-    width: calc(100%);
     padding-top: calc(80%);
     background-color: black;
+    width: 250px;
+
 }

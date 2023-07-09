@@ -72,7 +72,11 @@ function setColor() {
 function updateColorUI(selection) {
     if (isRandomColor === true) {
         displaySelectedColor.style.background = `linear-gradient(to right, red, orange, yellow, green, aqua, blue, darkblue, purple)`;
-    } else {
+    } else if (isEraserToggled === true) {
+        displaySelectedColor.style.background = ``;
+        displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+    }
+    else {
         displaySelectedColor.style.background = ``;
         displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
     }
@@ -80,8 +84,8 @@ function updateColorUI(selection) {
         if (selection.classList.contains("highlighted-color")) {
             selection.classList.remove("highlighted-color");
             isColorToggled = false;
-            displaySelectedColor.style.backgroundColor = `rgb(0, 0, 0)`;
-        } else {
+            displaySelectedColor.style.backgroundColor = `rgb(${rgbRed}, ${rgbGreen}, ${rgbBlue})`;
+        } else if (isColorToggled === true) {
             colorSelections.forEach(selection => {
                 selection.classList.remove("highlighted-color");
             });
@@ -135,8 +139,19 @@ btnResizeGrid.addEventListener("click", resizeGrid);
 
 colorSelections.forEach(selection => {
     selection.addEventListener("click", function() {
+        if (isRandomColor === true || isEraserToggled === true) {
+            isRandomColor = false;
+            isEraserToggled = false;
+            btnRandomizeColor.classList.remove("selected");
+            btnEraser.classList.remove("selected");
+        }
         if (isColorToggled === false) {
             isColorToggled = true;
+        } else {
+            if (selection.classList.contains("highlighted-color")) {
+                selection.classList.remove("highlighted-color");
+                isColorToggled = false;
+            }
         }
         getColor(this);
         setColor();
