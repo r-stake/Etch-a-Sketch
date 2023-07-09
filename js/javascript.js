@@ -131,6 +131,8 @@ function randomizeColor() {
     rgbGreen = Math.floor(Math.random() * 256);
     rgbBlue = Math.floor(Math.random() * 256);
 }
+test
+
 
 function sketch() {
     const grid = document.querySelectorAll(".container>div");
