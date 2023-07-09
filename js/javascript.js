@@ -161,6 +161,7 @@ function handleMouseup() {
 
 
 function sketch() {
+    mousePressed = false;
     const grid = document.querySelectorAll(".container>div");
 
     grid.forEach(item => {
@@ -251,12 +252,6 @@ btnDarkeningEffect.addEventListener("click", () => {
 })
 
 
-container.addEventListener("mouseenter", () => {
-    sketch();
-});
-
-container.addEventListener("mouseleave", () => {
-    mousePressed = false;
-});
+container.addEventListener("mouseenter", sketch);
 
 createGrid(n);
